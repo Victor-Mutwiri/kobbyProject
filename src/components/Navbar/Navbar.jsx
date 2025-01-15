@@ -20,7 +20,7 @@ const Navbar = () => {
                     <span className="login">Login</span>
                     {showDropdown && (
                         <ul className="dropdown-menu">
-                            <li><Link to="">Project Manager</Link></li>
+                            <li><Link to="/projectmanager">Project Manager</Link></li>
                             <li><Link to="/dev">Developer</Link></li>
                             <li><Link to="/user">User</Link></li>
                         </ul>
