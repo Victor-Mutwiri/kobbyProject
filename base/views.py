@@ -1,89 +1,72 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
-from django.http import HttpResponse, JsonResponse
-# Create your views here.
-from .models import Project, Module, Issue, IssueAssgnmt
-from django.views.decorators.csrf import csrf_exempt
-from .forms import IssueForm
-from django.http import HttpResponse
-import redis
-from .models import Module
+from django.http import HttpResponseBadRequest, HttpResponse, JsonResponse
+from .forms import ProjectForm, IssueForm
 import json
+from django.views.decorators.csrf import csrf_exempt
+from .models import Project, Issue
+from datetime import datetime
+import redis
 
-redis_client = redis.Redis()
+redis_cli = redis.Redis()
+pubsub = redis_cli.pubsub()
 
-class Lprojects(LoginRequiredMixin, View):
-    def get(self, request):
-        projects = Project.objects.filter(project_manager=request.user)
-        issuesP = []
-        for prj in projects:
-            _prj = {}
-            _prj['id'] = prj.id
-            _prj['name']  = prj.project_title
-            modules = Module.objects.filter(assoc_project=prj)
-            Issues = Issue.objects.filter(module__in=modules) 
-            issues = IssueAssgnmt.objects.filter(issue__in=Issues)
-            high = issues.filter(priority='High').order_by('issued_at')
-            _prj['pending'] = issues.count()
-            _prj['High'] = high.count()
-            _prj['lastupdate'] = "24.02.2001"
-            _prj['status'] ='ACTIVE'
-            issuesP.append(_prj)
-        return JsonResponse(issuesP, safe=False)
 
-class IssueSummary(LoginRequiredMixin, View):
-    def get(self, request):
-        summary = {}
-        summary['issues'] = IssueAssgnmt.objects.filter(staff=request.user).count()
-        summary['open'] = IssueAssgnmt.objects.filter(staff=request.user, status='Open').count()
-        summary['closed'] = IssueAssgnmt.objects.filter(staff=request.user, status='Closed').count()
-        summary['escalated'] = IssueAssgnmt.objects.filter(staff=request.user, escalated=True).count()
-        return JsonResponse(summary)
+def project_info(request, *args, **kwargs):
+  print(request.GET)
+  issues = Issue.objects.all()
+  return HttpResponse(json.dumps({"ok":"project info"}))
 
-class Projects(LoginRequiredMixin, View):
-    #get existing projects + module + issues
-    def get(self, request):
-        all_projects = Project.objects.filter(project_manager=request.user)
-        for project in all_projects:
-            project.__setattr__('modules', Module.objects.filter(assoc_project=project).count())
-            project.__setattr__('issues', Issue.objects.filter(module__in=Module.objects.filter(assoc_project=project)).count())
-        modules = Module.objects.filter(assoc_project__in=all_projects)
-        for module in modules:
-            module.__setattr__("issues", Issue.objects.filter(module=module).count())
-        return render(request, 'projects.html', {'projects': all_projects, "modules": modules})
+def get_issue_info(request, *args, **kwargs):
+  issue = Issue.objects.filter(**kwargs)[0].__dict__
+  issue.pop('_state')
+  issue['cdueDate'] = datetime.isoformat(issue['cdueDate'])
+  return HttpResponse(json.dumps(issue))
 
-    @csrf_exempt        
-    def post(self, request, *args, **kwargs):
-        return HttpResponse("kiptoo haron")
+@csrf_exempt
+def issues(request):
+  if request.method == 'POST':
+    data = json.loads(request.body)
+    data['cproject'] = Project.objects.filter(projectID='PRJ-001')[0]
+    if data['cassignee'] == '':
+       data['cassignee'] = None
+    else:
+       data['cassignee'] = User.objects.filter(username=data['cassignee'])
+    data['cdueDate'] =   datetime.fromisoformat(data['cdueDate'])
+    issue = IssueForm(data)
+    if issue.is_valid():
+      issue = Issue.objects.create(**data)
+    return HttpResponse("issue created")
 
-class Log(LoginRequiredMixin, View):
-    def get(self, request):
-        form = IssueForm()
-        return render(request, 'issue.html', {'form':form})    
-
-    def post(self, request):
-        form = IssueForm(request.POST)
-        if form.is_valid():
-            project = form.cleaned_data.pop('project')
-            module = form.cleaned_data['module']
-            form.cleaned_data['assoc_user'] = module.assigned_to
-            issue = Issue.objects.create(**(form.cleaned_data))
-            #issue.alert_dev()
-            #redis_client.publish(module.channel, json.dumps(issue.__dict__))
-            #issue_assignement dict
-            issueassignment = {}
-            issueassignment['staff'] = form.cleaned_data['assoc_user']#default user
-            issueassignment['issue'] = issue
-            issueAssignment = IssueAssgnmt.objects.create(**issueassignment)
-            issue_dict = {}
-            issue_dict['id'] = issueAssignment.id
-            issue_dict['Type'] = issueAssignment.issue.Type
-            issue_dict['created_at'] = issueAssignment.issue.created_at.strftime("%Y%M%D %H:%m")
-            issue_dict['project'] = issueAssignment.issue.module.assoc_project.project_title
-            issue_dict['status'] = issueAssignment.status
-            issue_dict['priority'] = issueAssignment.priority
-            issue_dict['assigned_to'] = issueAssignment.staff.username
-            redis_client.publish(module.channel, json.dumps(issue_dict))
-
-        return redirect('log')
+@csrf_exempt
+def projects(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        data['project_url'] = None
+        project = ProjectForm(data)
+      
+        if project.is_valid():
+            if data['projectLeader'] == '':
+                data['projectLeader'] = request.user
+            else:
+                user = User.objects.filter(username=data.projectLeader)
+                data['projectLeader'] = user
+            project = Project.objects.create(**data)
+            channel = "PRJ-" + str(project.id)
+            return HttpResponse(project.id, status=201)
+        print(project.errors)
+        return HttpResponseBadRequest('invalid form')
+    if request.method == 'GET':
+       print(request.GET)
+       print(request.GET.get('projectd'))
+       if request.GET.get('projectid'):
+           response = {"ok":"info"}
+           return HttpResponse(json.dumps(response))
+       projects = Project.objects.all()
+       _projects = []
+       for project in projects:
+         __project = {}
+         __project = dict(project.__dict__)
+         __project.pop('_state')
+         __project['startDate'] = datetime.isoformat(project.startDate)
+         _projects.append(__project)
+       return HttpResponse(json.dumps(_projects))

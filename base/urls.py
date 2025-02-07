@@ -1,9 +1,10 @@
-from django.urls import path, include
-from .views import Projects, Log, IssueSummary, Lprojects
+from django.urls import path
+from .views import projects, project_info
+from .views import issues, get_issue_info
 
 urlpatterns = [
-    path('projects/', Projects.as_view(), name='projects'),
-    path('log/', Log.as_view(), name='log'),
-    path('IssueSummary/', IssueSummary.as_view()),
-    path('lprojects/', Lprojects.as_view()),
+  path('issues/', issues, name='issues'),
+  path('issues/<str:id>/', get_issue_info, name='issue_info'),
+  path('projects/', projects, name='projects'),
+  path('projects/<str:id>/', project_info, name='project-info')
 ]

@@ -1,0 +1,336 @@
+<main id="main2">
+<nav>
+ <button class="IS" id="init">Summary</button><button class="IS">Timeline</button><button class="IS">Board</button><button class="IS">List</button>
+
+
+
+</nav>
+  
+<section>
+  <h3>projects/<span id="prname">issues tracking</span></h3>
+
+<div id="tlm" style="display: none;">
+    <h4>Timeline</h4>
+    {% include 'timeline.html' %}
+</div>
+
+
+
+
+<div id="lll" style="display: none;">
+  <header>
+  <h4>List</h4>
+  <header id="str1">
+    <input type="text" placeholder="Search list">
+  </header>
+</header>
+<div class="table-container"><table class="projects-table">
+ <thead>
+   <tr class="table-header">
+     <th>
+       <button class="sort-button">Issu ID
+         
+       </button>
+     </th>
+     <th>
+       <button class="sort-button">issue Name
+         
+        </button>
+      </th>
+      <th>
+        <button class="sort-button">@assignee
+        </button>
+      </th>
+      <th>
+        <button class="sort-button">Priority
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-down sort-icon">
+          <path d="m21 16-4 4-4-4"></path>
+          <path d="M17 20V4"></path>
+          <path d="m3 8 4-4 4 4"></path>
+          <path d="M7 4v16"></path>
+          </svg>
+        </button>
+       </th>
+       <th>
+         <button class="sort-button">Created
+  <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 610.398 610.398" xml:space="preserve">
+<g>
+	<g>
+		<path d="M159.567,0h-15.329c-1.956,0-3.811,0.411-5.608,0.995c-8.979,2.912-15.616,12.498-15.616,23.997v10.552v27.009v14.052    c0,2.611,0.435,5.078,1.066,7.44c2.702,10.146,10.653,17.552,20.158,17.552h15.329c11.724,0,21.224-11.188,21.224-24.992V62.553    V35.544V24.992C180.791,11.188,171.291,0,159.567,0z"></path>
+		<path d="M461.288,0h-15.329c-11.724,0-21.224,11.188-21.224,24.992v10.552v27.009v14.052c0,13.804,9.5,24.992,21.224,24.992    h15.329c11.724,0,21.224-11.188,21.224-24.992V62.553V35.544V24.992C482.507,11.188,473.007,0,461.288,0z"></path>
+		<path d="M539.586,62.553h-37.954v14.052c0,24.327-18.102,44.117-40.349,44.117h-15.329c-22.247,0-40.349-19.79-40.349-44.117    V62.553H199.916v14.052c0,24.327-18.102,44.117-40.349,44.117h-15.329c-22.248,0-40.349-19.79-40.349-44.117V62.553H70.818    c-21.066,0-38.15,16.017-38.15,35.764v476.318c0,19.784,17.083,35.764,38.15,35.764h468.763c21.085,0,38.149-15.984,38.149-35.764    V98.322C577.735,78.575,560.671,62.553,539.586,62.553z M527.757,557.9l-446.502-0.172V173.717h446.502V557.9z"></path>
+		<path d="M353.017,266.258h117.428c10.193,0,18.437-10.179,18.437-22.759s-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.179-18.437,22.759C334.58,256.074,342.823,266.258,353.017,266.258z"></path>
+		<path d="M353.017,348.467h117.428c10.193,0,18.437-10.179,18.437-22.759c0-12.579-8.248-22.758-18.437-22.758H353.017    c-10.193,0-18.437,10.179-18.437,22.758C334.58,338.288,342.823,348.467,353.017,348.467z"></path>
+		<path d="M353.017,430.676h117.428c10.193,0,18.437-10.18,18.437-22.759s-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.18-18.437,22.759S342.823,430.676,353.017,430.676z"></path>
+		<path d="M353.017,512.89h117.428c10.193,0,18.437-10.18,18.437-22.759c0-12.58-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.179-18.437,22.759C334.58,502.71,342.823,512.89,353.017,512.89z"></path>
+		<path d="M145.032,266.258H262.46c10.193,0,18.436-10.179,18.436-22.759s-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.179-18.437,22.759C126.596,256.074,134.838,266.258,145.032,266.258z"></path>
+		<path d="M145.032,348.467H262.46c10.193,0,18.436-10.179,18.436-22.759c0-12.579-8.248-22.758-18.436-22.758H145.032    c-10.194,0-18.437,10.179-18.437,22.758C126.596,338.288,134.838,348.467,145.032,348.467z"></path>
+		<path d="M145.032,430.676H262.46c10.193,0,18.436-10.18,18.436-22.759s-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.18-18.437,22.759S134.838,430.676,145.032,430.676z"></path>
+		<path d="M145.032,512.89H262.46c10.193,0,18.436-10.18,18.436-22.759c0-12.58-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512.89z"></path>
+	</g>
+</g>
+</svg>
+</button></th><th>
+         <button class="sort-button">Updated
+         <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 610.398 610.398" xml:space="preserve">
+<g>
+	<g>
+		<path d="M159.567,0h-15.329c-1.956,0-3.811,0.411-5.608,0.995c-8.979,2.912-15.616,12.498-15.616,23.997v10.552v27.009v14.052    c0,2.611,0.435,5.078,1.066,7.44c2.702,10.146,10.653,17.552,20.158,17.552h15.329c11.724,0,21.224-11.188,21.224-24.992V62.553    V35.544V24.992C180.791,11.188,171.291,0,159.567,0z"></path>
+		<path d="M461.288,0h-15.329c-11.724,0-21.224,11.188-21.224,24.992v10.552v27.009v14.052c0,13.804,9.5,24.992,21.224,24.992    h15.329c11.724,0,21.224-11.188,21.224-24.992V62.553V35.544V24.992C482.507,11.188,473.007,0,461.288,0z"></path>
+		<path d="M539.586,62.553h-37.954v14.052c0,24.327-18.102,44.117-40.349,44.117h-15.329c-22.247,0-40.349-19.79-40.349-44.117    V62.553H199.916v14.052c0,24.327-18.102,44.117-40.349,44.117h-15.329c-22.248,0-40.349-19.79-40.349-44.117V62.553H70.818    c-21.066,0-38.15,16.017-38.15,35.764v476.318c0,19.784,17.083,35.764,38.15,35.764h468.763c21.085,0,38.149-15.984,38.149-35.764    V98.322C577.735,78.575,560.671,62.553,539.586,62.553z M527.757,557.9l-446.502-0.172V173.717h446.502V557.9z"></path>
+		<path d="M353.017,266.258h117.428c10.193,0,18.437-10.179,18.437-22.759s-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.179-18.437,22.759C334.58,256.074,342.823,266.258,353.017,266.258z"></path>
+		<path d="M353.017,348.467h117.428c10.193,0,18.437-10.179,18.437-22.759c0-12.579-8.248-22.758-18.437-22.758H353.017    c-10.193,0-18.437,10.179-18.437,22.758C334.58,338.288,342.823,348.467,353.017,348.467z"></path>
+		<path d="M353.017,430.676h117.428c10.193,0,18.437-10.18,18.437-22.759s-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.18-18.437,22.759S342.823,430.676,353.017,430.676z"></path>
+		<path d="M353.017,512.89h117.428c10.193,0,18.437-10.18,18.437-22.759c0-12.58-8.248-22.759-18.437-22.759H353.017    c-10.193,0-18.437,10.179-18.437,22.759C334.58,502.71,342.823,512.89,353.017,512.89z"></path>
+		<path d="M145.032,266.258H262.46c10.193,0,18.436-10.179,18.436-22.759s-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.179-18.437,22.759C126.596,256.074,134.838,266.258,145.032,266.258z"></path>
+		<path d="M145.032,348.467H262.46c10.193,0,18.436-10.179,18.436-22.759c0-12.579-8.248-22.758-18.436-22.758H145.032    c-10.194,0-18.437,10.179-18.437,22.758C126.596,338.288,134.838,348.467,145.032,348.467z"></path>
+		<path d="M145.032,430.676H262.46c10.193,0,18.436-10.18,18.436-22.759s-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.18-18.437,22.759S134.838,430.676,145.032,430.676z"></path>
+		<path d="M145.032,512.89H262.46c10.193,0,18.436-10.18,18.436-22.759c0-12.58-8.248-22.759-18.436-22.759H145.032    c-10.194,0-18.437,10.179-18.437,22.759C126.596,502.71,134.838,512.89,145.032,512.89z"></path>
+	</g>
+</g>
+</svg></button></th><th><button class="sort-button">Status<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-down sort-icon"><path d="m21 16-4 4-4-4"></path><path d="M17 20V4"></path><path d="m3 8 4-4 4 4"></path><path d="M7 4v16"></path></svg></button></th><th>
+        <button class="sort-button">@Reporter
+        </button>
+      </th></tr></thead>
+
+
+<tbody><tr class="table-row"><td class="table-cell tmlis">IS-005</td><td class="table-cell tmlis">Database design</td><td class="table-cell rowusr">
+  <div id="tui">
+    <img src="/static/img/pp.png" width="24px" height="24px">
+    kiptoo
+  </div>
+</td><td class="table-cell">High</td><td class="table-cell">2024-03-11</td><td class="table-cell">2024-03-11</td><td class="table-cell"><span class="status-badge">active</span></td><td class="table-cell">
+  <div id="tui">
+    <img src="/static/img/pp.png" width="24px" height="24px">
+    kiptoo
+  </div>
+</td></tr><tr class="table-row"><td class="table-cell tmlis">IS-006</td><td class="table-cell tmlis">Requirements gathering</td><td class="table-cell">
+  <div id="tui">
+    <img src="/static/img/pp.png" width="24px" height="24px">
+    kiptoo
+  </div>
+</td><td class="table-cell">High</td><td class="table-cell">2024-03-11</td><td class="table-cell">2024-03-11</td><td class="table-cell"><span class="status-badge">active</span></td><td class="table-cell">
+  <div id="tui">
+    <img src="/static/img/pp.png" width="24px" height="24px">
+    kiptoo
+  </div>
+</td></tr></tbody>
+
+</table></div>
+</div>
+<div id="ccc" style="display: none;">
+  <h4>Board</h4>
+  <section class="board">
+   <div class="column" id="todo">
+    <h3>To Do</h3>
+    <div class="card">
+      <p>Web infrastructure design</p>
+  <div class="bs">
+    <div class="key">IS-001</div>
+    <div class="ku"></div>
+    </div></div>
+    
+  </div>
+  
+  <div class="column" id="in-progress">
+    <h3>In Progress</h3>
+    
+  <div class="card">
+      <p>Database design</p>
+  <div class="bs">
+    <div class="key">IS-002</div>
+    <div class="ku"></div>
+    </div></div></div>
+  
+  <div class="column" id="done">
+    <h3>Done</h3>
+    
+  <div class="card">
+      <p>Requirements gatherng</p>
+  <div class="bs">
+    <div class="key">IS-000</div>
+    <div class="ku"></div>
+    </div></div></div>
+  </section>
+</div>
+
+<div id="sumc" style="display: block;">
+  <h4>Summary</h4>
+  <section class="ll">
+
+  {% include 'project_summary_strip.html' %}
+
+  <div class="r1">
+
+   <div>
+    <h3 style="margin: 0 0 8px 0; color: #344563; font-size: 16px;">Status overview</h3>
+    <p style="margin: 0 0 20px 0; color: #42526E; font-size: 14px;">
+      Get a snapshot of the status of your issues. 
+      <a href="#" style="color: #0052CC; text-decoration: none;">View all issues</a>
+    </p>
+    
+    <div style="position: relative; width: 200px; height: 200px; margin: 0 auto;">
+      <svg viewBox="0 0 100 100">
+        <!-- Done (1) -->
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#4BADE8" stroke-width="10" stroke-dasharray="18.75 81.25" stroke-dashoffset="-0"></circle>
+        
+        <!-- In Progress (2) -->
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF7452" stroke-width="10" stroke-dasharray="25 75" stroke-dashoffset="-18.75"></circle>
+        
+        <!-- To Do (5) -->
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF8F73" stroke-width="10" stroke-dasharray="56.25 43.75" stroke-dashoffset="-43.75"></circle>
+        
+        <!-- Center text -->
+        <text x="50" y="45" text-anchor="middle" font-size="24" font-weight="bold" fill="#172B4D">8</text>
+        <text x="50" y="65" text-anchor="middle" font-size="12" fill="#42526E">Total issues</text>
+      </svg>
+    </div>
+    
+    <!-- Legend -->
+    <div style="margin-top: 20px; font-size: 14px;">
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <span style="display: inline-block; width: 12px; height: 12px; background: #FF8F73; border-radius: 3px; margin-right: 8px;"></span>
+        <span style="color: #42526E;">To Do (5)</span>
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <span style="display: inline-block; width: 12px; height: 12px; background: #FF7452; border-radius: 3px; margin-right: 8px;"></span>
+        <span style="color: #42526E;">In Progress (2)</span>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <span style="display: inline-block; width: 12px; height: 12px; background: #4BADE8; border-radius: 3px; margin-right: 8px;"></span>
+        <span style="color: #42526E;">Done (1)</span>
+      </div>
+    </div>
+  </div>
+
+<div>
+    <h3>Assignment workload</h3>
+    <p>Workload monitoring and <a href="#" style="color: #0052CC; text-decoration: none;">Reassignment to balance work among employees</a>
+    </p>
+
+    <div class="tass" style="margin-bottom: 16px;">
+      <div>
+        <div style="color: #42526E; font-size: 12px;">Assignee</div>
+        <div style="color: #42526E; font-size: 12px;">Work load distribution</div>
+      </div>
+
+      <div class="llm" style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; min-width: 120px;">
+          <!-- User avatar -->
+          <svg width="24" height="24" viewBox="0 0 24 24" style="margin-right: 8px;">
+            <circle cx="12" cy="12" r="11" fill="#DFE1E6" stroke="#6B778C" stroke-width="1"></circle>
+            <path d="M12 13c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z" fill="#6B778C"></path>
+          </svg>
+          <span style="color: #42526E; font-size: 14px;">Unassigned</span>
+        </div>
+
+        <!-- Progress bar container -->
+        <div style="flex-grow: 1; height: 24px; background: #DFE1E6; border-radius: 3px; overflow: hidden;">
+          <!-- Progress bar -->
+          <div style="width: 20%; height: 100%; background: #6B778C; display: flex; align-items: center; padding: 0 8px;">
+            <span style="color: white; font-size: 12px;">20%</span>
+          </div>
+        </div>
+      </div><div class="llm">
+        <div class="qp">
+          <!-- User avatar -->
+          <img height="24" width="24" src="/static/img/pp.png">
+  <div>Kiptoo haron</div>
+</div>
+
+        <!-- Progress bar container -->
+        <div style="flex-grow: 1; height: 24px; background: #DFE1E6; border-radius: 3px; overflow: hidden;">
+          <!-- Progress bar -->
+          <div style="width: 65%; height: 100%; background: #6B778C; display: flex; align-items: center; padding: 0 8px;">
+            <span style="color: white; font-size: 12px;">65%</span>
+          </div>
+        </div>
+      </div><div class="llm">
+        <div class="qp">
+          <!-- User avatar -->
+          <img height="24" width="24" src="/static/img/pp.png">
+  <div>Victor mutwiri</div>
+</div>
+
+        <!-- Progress bar container -->
+        <div style="flex-grow: 1; height: 24px; background: #DFE1E6; border-radius: 3px; overflow: hidden;">
+          <!-- Progress bar -->
+          <div style="width: 15%; height: 100%; background: #6B778C; display: flex; align-items: center; padding: 0 8px;">
+            <span style="color: white; font-size: 12px;">15%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="tcat">
+    <h3>Types of work</h3>
+    <p>
+      Get a breakdown of issues by their types. 
+      <a href="#" style="color: #0052CC; text-decoration: none;">View all items</a>
+    </p>
+
+    <div class="tcatc">
+      <div class="tcatch">
+        <div>Type</div>
+        <div>Distribution</div>
+      </div>
+
+      <!-- Task Row -->
+      <div class="tcatcc">
+        <div>
+          <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right: 8px;">
+            <rect width="16" height="16" rx="3" fill="#4BADE8"></rect>
+            <path d="M4 8.5L7 11.5L12 4.5" stroke="white" stroke-width="2" fill="none"></path>
+          </svg>
+          <span style="color: #42526E; font-size: 14px;">Task</span>
+        </div>
+        <div>
+          <div style="width: 60%; height: 100%; background: #6B778C; display: flex; align-items: center;">
+            <span style="color: white; font-size: 12px; margin-left: 8px;">60%</span>
+          </div>
+        </div>
+      </div><div class="tcatcc">
+        <div>
+          <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right: 8px;">
+            <rect width="16" height="16" rx="3" fill="#8777D9"></rect>
+            <path d="M4 8L8 4L12 8L8 12L4 8Z" fill="white"></path>
+          </svg>
+          <span style="color: #42526E; font-size: 14px;">Feature request</span>
+        </div>
+        <div>
+          <div style="width: 20%; height: 100%; background: #6B778C; text-align: center">
+            <span style="color: white; font-size: 12px; margin-left: 8px;">20%</span>
+          </div>
+        </div>
+      </div><div class="tcatcc">
+        <div>
+          <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right: 8px;">
+            <rect width="16" height="16" rx="3" fill="#4BADE8"></rect>
+            <path d="M4 8.5L7 11.5L12 4.5" stroke="white" stroke-width="2" fill="none"></path>
+          </svg>
+          <span style="color: #42526E; font-size: 14px;">Task</span>
+        </div>
+        <div>
+          <div style="width: 20%; height: 100%; background: #6B778C; display: flex; align-items: center;">
+            <span style="color: white; font-size: 12px; margin-left: 8px;">20%</span>
+          </div>
+        </div>
+      </div>
+
+      
+      
+
+      <!-- Subtask Row -->
+      
+    </div>
+  </div>
+
+
+  </div> 
+
+
+  </section>
+    </div>
+  </section>
+</main>
