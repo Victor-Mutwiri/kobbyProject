@@ -10,17 +10,17 @@
   align-items: center;
 }
 .form-container {
- height: 450px;
+ width: 75%;
  overflow-y: scroll;
  overflow-x: hidden;
  background-color: ghostwhite;
  padding: 30px;
  border-radius: 8px;
  box-shadow: 0 4px 6px rgba(0,0,0,1);
- min-width: 400px;
 }
 .form-group {
-    margin-bottom: 15px;
+    margin:5px;
+    max-width: 200px;
 }
 .fcont label {
     display: block;
@@ -31,17 +31,22 @@
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 95%;
  }
  .fcont .btn {
-     width: 100%;
      padding: 10px;
      background-color: #4CAF50;
      color: white;
      border: none;
      border-radius: 4px;
      cursor: pointer;
+     align-self: end;
 }
 .fcont .btn:hover {
     background-color: #45a049;
+}
+#projectForm{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center
 }

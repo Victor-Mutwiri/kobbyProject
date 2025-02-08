@@ -267,10 +267,7 @@ jQuery(document).ready(function(){
     jQuery('#ppp').css('display', 'block')
     fetch('http://localhost:8000/projects').then((response)=>{
       response.json().then((data)=>{
-        console.log("=======")
-        console.log(data)
         insert_project(data)
-        console.log("=======")
       })
     })
   })
@@ -331,7 +328,73 @@ jQuery(document).ready(function(){
         headers: {'content-type':'application/json'},
         body: JSON.stringify(_issue)
       }).then((response)=>{
-        console.log(response)
+        response.json().then((data)=>{
+          jQuery('.itemempty').css('display', 'none')
+          let elem = jQuery.clone(jQuery('.container>.item')[0])
+          elem.firstElementChild.firstElementChild.firstElementChild.textContent = data.ctitle
+          elem.addEventListener('click', (event)=>{
+            event.stopPropagation()
+            let _url = "http://localhost:8000/issues/?issueid=" + event.currentTarget.id
+            fetch(_url).then((response)=>{
+              response.json().then((data)=>{
+               let _issuepop = jQuery.clone(jQuery('#issuepopup')[0])
+               _issuepop.firstElementChild.firstElementChild.firstElementChild.addEventListener('click', (event)=>{
+                 event.stopPropagation()
+                 jQuery('#issuepopup').css('display', 'none')
+               })
+               let mainc = _issuepop.firstElementChild.lastElementChild
+               let aside = mainc.lastElementChild
+               //fill left aside
+               console.log("------")
+               console.log(data)
+               console.log("------")
+               
+               let header = mainc.firstElementChild.firstElementChild
+               header.firstElementChild.textContent = data.ctitle
+               header.children[1].textContent = "In progress"
+               header.lastElementChild.textContent = "created by kipto haron"
+               let _desc = mainc.firstElementChild.children[1].lastElementChild
+               _desc.textContent = "Issue Description"
+
+               let _comments = mainc.firstElementChild
+               console.log(_comments)
+               let __url = `http://localhost:8000/${elem.id}/comments/`
+               fetch(__url).then((response)=>{
+                 response.json().then((data)=>{
+                     let _c_entry = jQuery.clone(_comments.lastElementChild.lastElementChild)
+                     _comments.lastElementChild.removeChild(_comments.lastElementChild.lastElementChild)
+                     for (_entry of data){
+                       let __entry = jQuery.clone(_c_entry)
+                       __entry.firstElementChild.firstElementChild.textContent = _entry.user
+                       __entry.firstElementChild.lastElementChild.textContent = _entry.date
+                       __entry.lastElementChild.textContent = _entry.content
+                       _comments.lastElementChild.append(__entry)
+                     }
+                 })
+               })
+               let _comment = jQuery.clone(_comments.lastElementChild)
+               
+               //let _comment = _comments.lastElementChild
+               console.log(data)
+               document.querySelector('body').removeChild(document.querySelector('#issuepopup'))
+               document.querySelector('body').appendChild(_issuepop)
+               jQuery('#issuepopup').css('display', 'flex')
+              })
+             })
+            //let header = mainc.firstElmentChild.firstElementChild
+          })
+          document.querySelector('#wo .container').appendChild(elem)
+          let _url = "http://localhost:8000/projects/?projectid=" + data.cproject_id
+          fetch(_url).then((response)=>{
+            response.json().then((data)=>{
+              elem.id = data.id
+              console.log(data)
+              console.log(elem)
+              elem.firstElementChild.firstElementChild.lastElementChild.textContent = data.projectName
+            })
+          })
+          elem.style.display = "flex"
+        })
       })
       console.log(_issue)
       console.log('create issue')
